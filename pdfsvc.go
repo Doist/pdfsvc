@@ -14,6 +14,8 @@ import (
 	"strings"
 	"time"
 
+	"golang.org/x/net/html/charset"
+
 	"github.com/artyom/autoflags"
 	"github.com/artyom/buffering"
 )
@@ -74,11 +76,17 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 authorized:
-	if ct := r.Header.Get("Content-Type"); !strings.HasPrefix(ct, "text/html") {
+	ct := r.Header.Get("Content-Type")
+	if !strings.HasPrefix(ct, "text/html") {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 		return
 	}
-	rd, err := h.convert(r.Context(), r.Body)
+	utf8Body, err := charset.NewReader(r.Body, ct)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusUnsupportedMediaType), http.StatusUnsupportedMediaType)
+		return
+	}
+	rd, err := h.convert(r.Context(), utf8Body)
 	if err != nil {
 		log.Print(err)
 		code := http.StatusInternalServerError
@@ -104,7 +112,7 @@ func (h *handler) convert(ctx context.Context, r io.Reader) (io.ReadSeeker, erro
 		ctx, cancel = context.WithTimeout(ctx, h.d)
 		defer cancel()
 	}
-	cmd := exec.CommandContext(ctx, "wkhtmltopdf", "-q", "-", "-")
+	cmd := exec.CommandContext(ctx, "wkhtmltopdf", "--encoding", "utf8", "-q", "-", "-")
 	cmd.Stdin = r
 	// FIXME: we're suggesting that returned bodies are quite small, may not
 	// always be the case, but ok for controlled inputs
