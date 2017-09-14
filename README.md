@@ -3,7 +3,7 @@ a http service.
 
 Service accepts POST requests expecting utf8 html bodies and proper
 `Content-Type: text/html` header. If html is successfully converted, reply
-would have code 200 OK and `Content-Type: application/pdf`, the body would have
+would have code 200 OK and `Content-Type: application/pdf`, the body would be a
 pdf document.
 
 If pdfsvc is started with `TOKEN` environment variable or `-token=value` flag,
