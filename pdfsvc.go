@@ -162,7 +162,7 @@ func processStats(st *os.ProcessState) string {
 		return fmt.Sprintf("sys: %v, user: %v, maxRSS: %v",
 			st.SystemTime().Round(time.Millisecond),
 			st.UserTime().Round(time.Millisecond),
-			ByteSize(r.Maxrss<<10),
+			ByteSize(r.Maxrss),
 		)
 	}
 	return fmt.Sprintf("sys: %v, user: %v",
