@@ -5,6 +5,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"time"
 
 	"golang.org/x/net/html/charset"
@@ -30,6 +32,7 @@ func main() {
 		Timeout time.Duration `flag:"d,max time to allow wkhtmltopdf command to run"`
 		Procs   int           `flag:"n,max number of concurrent processes to allow"`
 		Token   string        `flag:"token,if set, check Authorization Bearer token"`
+		Quiet   bool          `flag:"q,be quiet, log less"`
 	}{
 		Addr:    defaultAddr,
 		Timeout: 5 * time.Second,
@@ -41,7 +44,7 @@ func main() {
 		args.Procs = 1
 	}
 	h := &handler{gate: make(chan struct{}, args.Procs),
-		d: args.Timeout, token: args.Token}
+		d: args.Timeout, token: args.Token, noisy: !args.Quiet}
 	srv := &http.Server{
 		Addr:              args.Addr,
 		Handler:           buffering.Handler(h, buffering.WithMaxSize(1<<20)),
@@ -58,6 +61,7 @@ type handler struct {
 	gate  chan struct{}
 	d     time.Duration
 	token string
+	noisy bool
 }
 
 func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -88,7 +92,6 @@ authorized:
 	}
 	rd, err := h.convert(r.Context(), utf8Body)
 	if err != nil {
-		log.Print(err)
 		code := http.StatusInternalServerError
 		if err == context.DeadlineExceeded {
 			code = http.StatusGatewayTimeout
@@ -119,8 +122,66 @@ func (h *handler) convert(ctx context.Context, r io.Reader) (io.ReadSeeker, erro
 	// FIXME: we're suggesting that returned bodies are quite small, may not
 	// always be the case, but ok for controlled inputs
 	out, err := cmd.Output()
+	if h.noisy {
+		log.Print(exitReason(err), " / ", processStats(cmd.ProcessState))
+	}
 	if err != nil {
 		return nil, err
 	}
 	return bytes.NewReader(out), nil
 }
+
+// exitReason translates error returned by os.Process.Wait() into human-readable
+// string.
+func exitReason(err error) string {
+	if err == nil {
+		return "exit code 0"
+	}
+	exiterr, ok := err.(*exec.ExitError)
+	if !ok {
+		return err.Error()
+	}
+	status := exiterr.Sys().(syscall.WaitStatus)
+	switch {
+	case status.Exited():
+		return fmt.Sprintf("exit code %d", status.ExitStatus())
+	case status.Signaled():
+		return fmt.Sprintf("exit code %d (%s)",
+			128+int(status.Signal()), status.Signal())
+	}
+	return err.Error()
+}
+
+// processStats returns finished process' CPU / memory statistics in
+// human-readable form.
+func processStats(st *os.ProcessState) string {
+	if st == nil {
+		return "n/a"
+	}
+	if r, ok := st.SysUsage().(*syscall.Rusage); ok && r != nil {
+		return fmt.Sprintf("sys: %v, user: %v, maxRSS: %v",
+			st.SystemTime().Round(time.Millisecond),
+			st.UserTime().Round(time.Millisecond),
+			ByteSize(r.Maxrss<<10),
+		)
+	}
+	return fmt.Sprintf("sys: %v, user: %v",
+		st.SystemTime().Round(time.Millisecond),
+		st.UserTime().Round(time.Millisecond))
+}
+
+// ByteSize implements Stringer interface for printing size in human-readable
+// form
+type ByteSize float64
+
+const (
+	_           = iota // ignore first value by assigning to blank identifier
+	KB ByteSize = 1 << (10 * iota)
+	MB
+	GB
+	TB
+	PB
+	EB
+	ZB
+	YB
+)
