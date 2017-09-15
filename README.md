@@ -10,7 +10,8 @@ would be a pdf document.
 If pdfsvc is started with `TOKEN` environment variable or `-token=value` flag,
 only requests having `Authorization: Bearer token` header are allowed.
 
-You can build ready-to-use docker image using Dockerfile from this repository:
+You can build ready-to-use docker image using Dockerfile from this repository
+(Docker 17.05 or later is required):
 
 	docker build -t pdfsvc:latest .
 
