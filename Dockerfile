@@ -13,7 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 	&& tar xf /tmp/archive.tar.xz -C /tmp \
 	&& install /tmp/wkhtmltox/bin/wkhtmltopdf /usr/local/bin \
 	&& apt-get purge -y xz-utils && apt-get clean \
-	&& rm -rf /tmp/archive.tar.xz /tmp/wkhtmltox /var/cache/apt /var/lib/apt
+	&& rm -rf /tmp/archive.tar.xz /tmp/wkhtmltox /var/cache/apt /var/lib/apt /var/log/*
 COPY --from=builder /tmp/pdfsvc /usr/local/bin/
 ENV ADDR=:8080
 EXPOSE 8080
