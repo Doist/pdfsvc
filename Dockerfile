@@ -9,7 +9,13 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		xz-utils fontconfig libxrender1 libxext6 \
-		fonts-dejavu fonts-arkpandora \
+		fonts-arkpandora \
+		fonts-dejavu \
+		fonts-ipafont \
+		fonts-liberation2 \
+		fonts-unfonts-core \
+		fonts-vlgothic \
+		fonts-wqy-zenhei \
 	&& tar xf /tmp/archive.tar.xz -C /tmp \
 	&& install /tmp/wkhtmltox/bin/wkhtmltopdf /usr/local/bin \
 	&& apt-get purge -y xz-utils && apt-get clean \
