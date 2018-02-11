@@ -122,7 +122,12 @@ func (h *handler) convert(ctx context.Context, r io.Reader) (io.ReadSeeker, erro
 	// always be the case, but ok for controlled inputs
 	out, err := cmd.Output()
 	if h.noisy {
-		log.Print(exitstatus.Reason(err), " / ", exitstatus.Stats(cmd.ProcessState))
+		select {
+		case <-ctx.Done():
+			log.Print(exitstatus.Reason(err), " / ", exitstatus.Stats(cmd.ProcessState), ", ", ctx.Err())
+		default:
+			log.Print(exitstatus.Reason(err), " / ", exitstatus.Stats(cmd.ProcessState))
+		}
 	}
 	if err != nil {
 		return nil, err
