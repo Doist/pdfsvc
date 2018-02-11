@@ -130,6 +130,11 @@ func (h *handler) convert(ctx context.Context, r io.Reader) (io.ReadSeeker, erro
 		}
 	}
 	if err != nil {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+		}
 		return nil, err
 	}
 	return bytes.NewReader(out), nil
