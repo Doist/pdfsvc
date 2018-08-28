@@ -1,6 +1,8 @@
-FROM golang:alpine as builder
+FROM golang:latest as builder
 RUN CGO_ENABLED=0 GOOS=linux go install -a -installsuffix=nocgo std
-WORKDIR /go/src/github.com/Doist/pdfsvc
+WORKDIR /project
+COPY go.sum go.mod ./
+RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -installsuffix=nocgo -o=/tmp/pdfsvc
 FROM debian:stable-slim

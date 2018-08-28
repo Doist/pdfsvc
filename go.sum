@@ -1,0 +1,12 @@
+github.com/artyom/autoflags v1.1.0 h1:Cz3qb/qSkhmt/Zgsu3D/HwMJtKYUSV5kctI6O9bekv4=
+github.com/artyom/autoflags v1.1.0/go.mod h1:Th9KgAVvFcYp7t8b//Pu21xHjExLpzr4SXCbwVbHL7Y=
+github.com/artyom/buffering v1.0.0 h1:KPNuDw9L5x/Pt84hV+K1h8u123C56SY0upnGGfebyvg=
+github.com/artyom/buffering v1.0.0/go.mod h1:THNL+wp7mTgpB+C3J5KzbrZP56fxjTUSaVrs2GIEj1c=
+github.com/artyom/bytesize v0.0.0-20170915114729-c9e755de1330 h1:u1p8QHLsrh6d0MQDmsbfcr/vdNgttyZU7PqXI6Ls6XA=
+github.com/artyom/bytesize v0.0.0-20170915114729-c9e755de1330/go.mod h1:35p0UI2r/FcQQX7pPolzk1IvpPoA+D3SBQjdz7nBPMI=
+github.com/artyom/exitstatus v0.0.0-20170915120126-0a657065c12f h1:l8/JgscnxYzPKFIcWos/0duh7p0gMBBaVsoiIplq+LM=
+github.com/artyom/exitstatus v0.0.0-20170915120126-0a657065c12f/go.mod h1:lQ1tcItkhLiAn/WFIsA2weHHOQbPKkmNNACLZqFuptA=
+golang.org/x/net v0.0.0-20180826012351-8a410e7b638d h1:g9qWBGx4puODJTMVyoPrpoxPFgVGd+z1DZwjfRu4d0I=
+golang.org/x/net v0.0.0-20180826012351-8a410e7b638d/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/text v0.3.0 h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=
+golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
