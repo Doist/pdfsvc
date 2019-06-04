@@ -1,16 +1,18 @@
-FROM golang:latest as builder
-RUN CGO_ENABLED=0 GOOS=linux go install -a -installsuffix=nocgo std
-WORKDIR /project
-COPY go.sum go.mod ./
+FROM golang:alpine AS builder
+RUN apk add --update upx
+WORKDIR /app
+ENV GOPROXY=https://proxy.golang.org CGO_ENABLED=0
+COPY go.mod go.sum ./
 RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -installsuffix=nocgo -o=/tmp/pdfsvc
-FROM debian:stable-slim
-ADD https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz /tmp/archive.tar.xz
+COPY . ./
+RUN go build -ldflags='-s -w' -o pdfsvc && upx --lzma pdfsvc
+
+FROM debian:stretch-slim
+ADD https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb /tmp/package.deb
 RUN export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update \
+	&& dpkg --install /tmp/package.deb || apt-get -f -y --no-install-recommends install \
 	&& apt-get install -y --no-install-recommends \
-		xz-utils fontconfig libxrender1 libxext6 \
 		fonts-arkpandora \
 		fonts-dejavu \
 		fonts-ipafont \
@@ -18,11 +20,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 		fonts-unfonts-core \
 		fonts-vlgothic \
 		fonts-wqy-zenhei \
-	&& tar xf /tmp/archive.tar.xz -C /tmp \
-	&& install /tmp/wkhtmltox/bin/wkhtmltopdf /usr/local/bin \
-	&& apt-get purge -y xz-utils && apt-get clean \
-	&& rm -rf /tmp/archive.tar.xz /tmp/wkhtmltox /var/cache/apt /var/lib/apt /var/log/*
-COPY --from=builder /tmp/pdfsvc /usr/local/bin/
+	&& apt-get clean \
+	&& rm -rf /tmp/package.deb /var/cache/apt /var/lib/apt /var/log/* \
+	&& dpkg -l wkhtmltox | grep ^ii
+COPY --from=builder /app/pdfsvc /usr/local/bin/
 ENV ADDR=:8080
 EXPOSE 8080
 CMD ["/usr/local/bin/pdfsvc"]
