@@ -2,6 +2,8 @@ github.com/artyom/autoflags v1.1.0 h1:Cz3qb/qSkhmt/Zgsu3D/HwMJtKYUSV5kctI6O9bekv
 github.com/artyom/autoflags v1.1.0/go.mod h1:Th9KgAVvFcYp7t8b//Pu21xHjExLpzr4SXCbwVbHL7Y=
 github.com/artyom/buffering v1.0.0 h1:KPNuDw9L5x/Pt84hV+K1h8u123C56SY0upnGGfebyvg=
 github.com/artyom/buffering v1.0.0/go.mod h1:THNL+wp7mTgpB+C3J5KzbrZP56fxjTUSaVrs2GIEj1c=
+github.com/artyom/buffering v1.0.1 h1:KuUhAHkkCb9pREbqqpvc4/91+OVN94jZq1jvs2Y8a8E=
+github.com/artyom/buffering v1.0.1/go.mod h1:rl9Laq9vRAf1o8FEuKHAZZQ21qKavoE5ipuNDK559V8=
 github.com/artyom/bytesize v0.0.0-20170915114729-c9e755de1330 h1:u1p8QHLsrh6d0MQDmsbfcr/vdNgttyZU7PqXI6Ls6XA=
 github.com/artyom/bytesize v0.0.0-20170915114729-c9e755de1330/go.mod h1:35p0UI2r/FcQQX7pPolzk1IvpPoA+D3SBQjdz7nBPMI=
 github.com/artyom/exitstatus v0.0.0-20170915120126-0a657065c12f h1:l8/JgscnxYzPKFIcWos/0duh7p0gMBBaVsoiIplq+LM=
