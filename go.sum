@@ -1,5 +1,7 @@
 github.com/artyom/autoflags v1.1.0 h1:Cz3qb/qSkhmt/Zgsu3D/HwMJtKYUSV5kctI6O9bekv4=
 github.com/artyom/autoflags v1.1.0/go.mod h1:Th9KgAVvFcYp7t8b//Pu21xHjExLpzr4SXCbwVbHL7Y=
+github.com/artyom/autoflags v1.1.1 h1:8flRmpb7xpjLHFVcM+HN+cEEKLw+H5a2hABDbRvfG9A=
+github.com/artyom/autoflags v1.1.1/go.mod h1:Th9KgAVvFcYp7t8b//Pu21xHjExLpzr4SXCbwVbHL7Y=
 github.com/artyom/buffering v1.0.0 h1:KPNuDw9L5x/Pt84hV+K1h8u123C56SY0upnGGfebyvg=
 github.com/artyom/buffering v1.0.0/go.mod h1:THNL+wp7mTgpB+C3J5KzbrZP56fxjTUSaVrs2GIEj1c=
 github.com/artyom/bytesize v0.0.0-20170915114729-c9e755de1330 h1:u1p8QHLsrh6d0MQDmsbfcr/vdNgttyZU7PqXI6Ls6XA=
