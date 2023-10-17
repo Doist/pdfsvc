@@ -1,11 +1,10 @@
-FROM golang:alpine AS builder
-RUN apk add --update upx
+FROM public.ecr.aws/docker/library/golang:alpine AS builder
 WORKDIR /app
-ENV GOPROXY=https://proxy.golang.org CGO_ENABLED=0
+ENV GOFLAGS="-ldflags=-w -trimpath" CGO_ENABLED=0
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . ./
-RUN go build -ldflags='-s -w' -o pdfsvc && upx --lzma pdfsvc
+RUN go version && go build
 
 FROM debian:stretch-slim
 ADD https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb /tmp/package.deb
