@@ -6,8 +6,8 @@ RUN go mod download
 COPY . ./
 RUN go version && go build
 
-FROM debian:stretch-slim
-ADD https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb /tmp/package.deb
+FROM public.ecr.aws/docker/library/debian:bookworm-slim
+ADD https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb /tmp/package.deb
 RUN export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get update \
 	&& dpkg --install /tmp/package.deb || apt-get -f -y --no-install-recommends install \
