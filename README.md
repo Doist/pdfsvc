@@ -1,5 +1,7 @@
-Command pdfsvc is a small wrapper around wkhtmltopdf command to expose it as
+Command pdfsvc is a small wrapper around [WeasyPrint command][1] to expose it as
 a http service.
+
+[1]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#command-line
 
 Service accepts POST requests expecting html bodies and proper `Content-Type:
 text/html` header. If html is not utf8, either set proper encoding in
