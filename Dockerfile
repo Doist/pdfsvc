@@ -6,23 +6,10 @@ RUN go mod download
 COPY . ./
 RUN go version && go build
 
-FROM public.ecr.aws/docker/library/debian:bookworm-slim
-ADD https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb /tmp/package.deb
-RUN export DEBIAN_FRONTEND=noninteractive \
-	&& apt-get update \
-	&& dpkg --install /tmp/package.deb || apt-get -f -y --no-install-recommends install \
-	&& apt-get install -y --no-install-recommends \
-		fonts-arkpandora \
-		fonts-dejavu \
-		fonts-ipafont \
-		fonts-liberation2 \
-		fonts-unfonts-core \
-		fonts-vlgothic \
-		fonts-wqy-zenhei \
-	&& apt-get clean \
-	&& rm -rf /tmp/package.deb /var/cache/apt /var/lib/apt /var/log/* \
-	&& dpkg -l wkhtmltox | grep ^ii
-COPY --from=builder /app/pdfsvc /usr/local/bin/
+FROM public.ecr.aws/docker/library/alpine:latest
+RUN apk add font-noto font-noto-cjk font-noto-extra weasyprint
+
+COPY --from=builder /app/pdfsvc /usr/bin/
 ENV ADDR=:8080
 EXPOSE 8080
-CMD ["/usr/local/bin/pdfsvc"]
+CMD ["/usr/bin/pdfsvc"]

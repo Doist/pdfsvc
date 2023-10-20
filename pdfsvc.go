@@ -114,9 +114,7 @@ func (h *handler) convert(ctx context.Context, r io.Reader) (io.ReadSeeker, erro
 		ctx, cancel = context.WithTimeout(ctx, h.d)
 		defer cancel()
 	}
-	cmd := exec.CommandContext(ctx, "wkhtmltopdf",
-		"--disable-javascript", "--disable-local-file-access",
-		"--encoding", "utf8", "-q", "-", "-")
+	cmd := exec.CommandContext(ctx, "weasyprint", "--encoding", "utf8", "--quiet", "-", "-")
 	cmd.Stdin = r
 	// FIXME: we're suggesting that returned bodies are quite small, may not
 	// always be the case, but ok for controlled inputs
