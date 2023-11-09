@@ -3,7 +3,7 @@ module github.com/Doist/pdfsvc
 go 1.20
 
 require (
-	github.com/artyom/autoflags v1.1.0
+	github.com/artyom/autoflags v1.1.1
 	github.com/artyom/buffering v1.0.0
 	github.com/artyom/exitstatus v0.0.0-20170915120126-0a657065c12f
 	golang.org/x/net v0.0.0-20180826012351-8a410e7b638d
