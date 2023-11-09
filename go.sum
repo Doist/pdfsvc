@@ -6,7 +6,7 @@ github.com/artyom/bytesize v0.0.0-20170915114729-c9e755de1330 h1:u1p8QHLsrh6d0MQ
 github.com/artyom/bytesize v0.0.0-20170915114729-c9e755de1330/go.mod h1:35p0UI2r/FcQQX7pPolzk1IvpPoA+D3SBQjdz7nBPMI=
 github.com/artyom/exitstatus v0.0.0-20170915120126-0a657065c12f h1:l8/JgscnxYzPKFIcWos/0duh7p0gMBBaVsoiIplq+LM=
 github.com/artyom/exitstatus v0.0.0-20170915120126-0a657065c12f/go.mod h1:lQ1tcItkhLiAn/WFIsA2weHHOQbPKkmNNACLZqFuptA=
-golang.org/x/net v0.0.0-20180826012351-8a410e7b638d h1:g9qWBGx4puODJTMVyoPrpoxPFgVGd+z1DZwjfRu4d0I=
-golang.org/x/net v0.0.0-20180826012351-8a410e7b638d/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
-golang.org/x/text v0.3.8 h1:nAL+RVCQ9uMn3vJZbV+MRnydTJFPf8qqY42YiA6MrqY=
-golang.org/x/text v0.3.8/go.mod h1:E6s5w1FMmriuDzIBO73fBruAKo1PCIq6d2Q6DHfQ8WQ=
+golang.org/x/net v0.17.0 h1:pVaXccu2ozPjCXewfr1S7xza/zcXTity9cCdXQYSjIM=
+golang.org/x/net v0.17.0/go.mod h1:NxSsAGuq816PNPmqtQdLE42eU2Fs7NoRIZrHJAlaCOE=
+golang.org/x/text v0.13.0 h1:ablQoSUd0tRdKxZewP80B+BaqeKJuVhuRxj/dkrun3k=
+golang.org/x/text v0.13.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
